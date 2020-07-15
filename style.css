@@ -1,0 +1,35 @@
+body {
+	font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background: linear-gradient(90deg, salmon, #f354d8);
+	overflow: hidden;
+}
+.header {
+	text-align: center;
+}
+
+.gameBoard {
+	border: 5px solid black;
+	align-items: center;
+	justify-content: center;
+	background-color: black;
+	display: grid;
+	grid-gap: 5px 5px;
+	grid-template-columns: repeat(3, auto);
+	grid-template-rows: repeat(3, auto);
+	height: 460px;
+	width: 460px;
+}
+
+.cell {
+	font-size: 4rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 150px;
+	height: 150px;
+	background-color: white;
+}
