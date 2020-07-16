@@ -33,3 +33,19 @@ body {
 	height: 150px;
 	background-color: white;
 }
+
+.reset {
+	font-size: 1.1rem;
+	height: 75px;
+	width: 100px;
+	border: none;
+	outline: none;
+	border-radius: 5px;
+	background: linear-gradient(-45deg, #54d8f3, #54f3d8);
+	margin-top: 25px;
+}
+
+.reset:hover {
+	box-shadow: 0px 0px 5px #000;
+	transform: scale(1.05);
+}
