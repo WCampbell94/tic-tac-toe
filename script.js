@@ -1,13 +1,27 @@
+//Player factory function handles creation of player objects
 const Player = (name, symbol) => {
 	const getName = () => name;
 	const getSymbol = symbol || "O";
+	let moves = [];
+
+	const addMoves = (index) => {
+		moves.push(index);
+	};
+
+	const getMoves = () => moves.sort();
+
+	const clearMoves = () => (moves = []);
+
 	const hasSymbol = (sym) => {
 		if (this.symbol == sym) return this.getName();
 	};
 	return {
+		getMoves,
 		getName,
 		getSymbol,
 		hasSymbol,
+		addMoves,
+		clearMoves,
 	};
 };
 
@@ -18,22 +32,25 @@ const GameBoard = (() => {
 
 	const reset = () => {
 		gameBoard.forEach((cell) => (cell.innerText = ""));
+		GameFlow.players.forEach((player) => player.clearMoves());
 		GameFlow.resetTurn();
 	};
 	//Event Listener for play
-	gameBoard.forEach((cell) => {
+	gameBoard.forEach((cell, index) => {
 		cell.addEventListener("click", () => {
 			if (cell.innerText != "") return;
 			else {
 				//Add play to screen
 				cell.innerText = GameFlow.currentPlayer().getSymbol;
-				console.log(GameFlow.currentPlayer().getName());
-				console.log(GameFlow.checkWin());
-				// GameFlow.changeTurn();
+				//Add move to players array
+				GameFlow.currentPlayer().addMoves(index);
+				//change current turn
+				GameFlow.changeTurn();
 
-				if (GameFlow.checkWin() === true)
-					alert(GameFlow.currentPlayer().getName());
-				else GameFlow.changeTurn();
+				//TODO display on screen instad of console
+				if (GameFlow.checkWin() != undefined) {
+					console.log(GameFlow.checkWin());
+				}
 			}
 		});
 	});
@@ -51,66 +68,47 @@ const GameBoard = (() => {
 //Resets game
 const GameFlow = (() => {
 	//TODO create these players from a form on the page instead of hard coding them in
-	let player1 = Player("Will", "x");
-	let computer = Player("computer", "o");
+	const players = [
+		(player1 = Player("Will", "x")),
+		(computer = Player("computer", "o")),
+	];
+
 	let turn = 1;
 
 	const resetTurn = () => (turn = 1);
 	const checkWin = () => {
 		//save current state of gamebBoard into array & check cells for win
-		let cells = GameBoard.gameBoard;
 
-		//BUG Always evaluates to true on game start because all cells = ''
-		if (
-			cells[0].innerText == cells[1].innerText &&
-			cells[0].innerText == cells[2].innerText
-		) {
-			return true;
-		} else if (
-			cells[3].innerText == cells[4].innerText &&
-			cells[3].innerText == cells[5].innerText
-		) {
-			return true;
-		} else if (
-			cells[6].innerText == cells[7].innerText &&
-			cells[6].innerText == cells[8].innerText
-		) {
-			return true;
-		} else if (
-			cells[0].innerText == cells[3].innerText &&
-			cells[0].innerText == cells[6].innerText
-		) {
-			return true;
-		} else if (
-			cells[1].innerText == cells[4].innerText &&
-			cells[1].innerText == cells[7].innerText
-		) {
-			return true;
-		} else if (
-			cells[2].innerText == cells[5].innerText &&
-			cells[2].innerText == cells[8].innerText
-		) {
-			return true;
-		} else if (
-			cells[0].innerText == cells[4].innerText &&
-			cells[0].innerText == cells[8].innerText
-		) {
-			return true;
-		} else if (
-			cells[2].innerText == cells[8].innerText &&
-			cells[2].innerText == cells[5].innerText
-		) {
-			return true;
-		} else if (!cells.includes("")) {
-			return false;
-			alert("TIE");
-		} else return false;
+		let player1Moves = players[0].getMoves();
+		let player2Moves = players[1].getMoves();
 
-		//ways to win
-		//3 adjacent indexes  0-2, 3-5, 6-8
-		//3 vertical index every three index; 0,3,6. 1,4,7. or 2,5,8
-		//diagonal 0,4,8 or 6, 4, 2
-		//else if no patterns found tie
+		const winPatterns = [
+			[0, 1, 2],
+			[3, 4, 5],
+			[6, 7, 8],
+			[0, 3, 6],
+			[1, 4, 7],
+			[2, 5, 8],
+			[0, 4, 8],
+			[2, 4, 6],
+		];
+
+		//Player moves array can be larger than 3
+		//players moves must include the three values
+
+		const matchCheck = (player) => {
+			return winPatterns.some((pattern) => {
+				return pattern.every((position) => player.includes(position));
+			});
+		};
+
+		if (matchCheck(player1Moves)) {
+			return players[0].getName();
+		} else if (matchCheck(player2Moves)) {
+			return players[1].getName();
+		} else if (!GameBoard.gameBoard.some((cell) => cell.textContent == "")) {
+			return "Tie";
+		} else return;
 	};
 
 	const changeTurn = () => {
@@ -118,21 +116,14 @@ const GameFlow = (() => {
 	};
 
 	let currentPlayer = () => {
-		return turn % 2 == 0 ? computer : player1;
+		return turn % 2 == 0 ? players[1] : players[0];
 	};
 
 	return {
+		players,
 		currentPlayer,
 		changeTurn,
 		checkWin,
 		resetTurn,
 	};
 })();
-
-//Player factory allows for creation of new players in the game
-
-//Create GameBoard object
-//store game board as an array inside GameBoard object
-
-//Check array for win in GameFlow
-//
