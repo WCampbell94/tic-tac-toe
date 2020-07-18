@@ -4,7 +4,9 @@
 
 In the browser
 
-This game is currently played against the computer only.
+This game is currently played against another player only.
+
+players will enter their names by their space symbol selection prior to starting the game
 
 ## Rules
 
