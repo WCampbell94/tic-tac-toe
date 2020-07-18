@@ -8,7 +8,16 @@
 		<div class="header">
 			<h1>Tic-Tac-Toe</h1>
 		</div>
-		<div class="gameBoard">
+		<div id="setup-container">
+			<form>
+				<label for="player-x">X:</label>
+				<input name="player-x" type="text" />
+				<label for="player-o">O:</label>
+				<input name="player-o" type="text" />
+			</form>
+			<button id="start-btn">Start</button>
+		</div>
+		<div class="game-board">
 			<div class="cell"></div>
 			<div class="cell"></div>
 			<div class="cell"></div>

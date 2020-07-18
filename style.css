@@ -11,7 +11,56 @@ body {
 	text-align: center;
 }
 
-.gameBoard {
+#setup-container {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	background-color: white;
+	width: 500px;
+	height: 450px;
+	border: solid 5px black;
+	padding: 20px;
+}
+
+form {
+	transform: scale(1.1);
+	display: flex;
+	justify-content: space-between;
+	width: 90%;
+	font-size: 1.3rem;
+
+	font-size: 1.3rem;
+}
+input[name="player-x"] {
+	outline: none;
+	border: none;
+	height: 1.5rem;
+
+	border-left: dotted 3px #2399c4;
+	border-bottom: dotted 3px #2399c4;
+}
+input[name="player-o"] {
+	outline: none;
+	border: none;
+	height: 1.5rem;
+
+	border-left: dotted 3px #eb532d;
+	border-bottom: dotted 3px #eb532d;
+}
+
+#start-btn {
+	font-size: 1.1rem;
+	height: 75px;
+	width: 100px;
+	outline: none;
+	border: none;
+	border-radius: 7px;
+	background: linear-gradient(-45deg, #54d8f3, #54f3d8);
+}
+
+.game-board {
 	border: 5px solid black;
 	align-items: center;
 	justify-content: center;
@@ -48,4 +97,19 @@ body {
 .reset:hover {
 	box-shadow: 0px 0px 5px #000;
 	transform: scale(1.05);
+}
+
+.win-box {
+	position: absolute;
+	border: solid 5px black;
+	margin: 10px;
+	width: 25%;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.failed-form {
+	position: absolute;
+	color: red;
+	padding: 0px;
 }
